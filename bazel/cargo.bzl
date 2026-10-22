@@ -82,7 +82,7 @@ def _cargo_build_impl(ctx):
         command = '''wasm="$CARGO_TARGET_DIR/wasm"
 python "$CARGO_WORKSPACE/bazel/prepare_wasm_rust.py" "$("$RUSTC" --print sysroot)" "$wasm"
 export RUSTFLAGS="--sysroot=$wasm/sysroot -Ctarget-feature=+atomics,+bulk-memory,+mutable-globals -Cpanic=abort"
-export CXXFLAGS_wasm32_unknown_emscripten="-pthread -fexceptions"
+export CXXFLAGS_wasm32_unknown_emscripten="-pthread -fwasm-exceptions"
 python "$wasm/workspace/build.py" --cargo "$CARGO" --target wasm32-unknown-emscripten --target-dir "$CARGO_TARGET_DIR" --output "%s" -- --no-default-features --features sql-nio/memory-transport -Zbuild-std=std,panic_abort
 ''' % archive.path
     cargo_action(
